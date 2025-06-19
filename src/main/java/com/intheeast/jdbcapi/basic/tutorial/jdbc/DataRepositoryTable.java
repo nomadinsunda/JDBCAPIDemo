@@ -1,6 +1,5 @@
 package com.intheeast.jdbcapi.basic.tutorial.jdbc;
 
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,15 +37,20 @@ public class DataRepositoryTable {
     }
   }
   
-//public void populateTable() throws SQLException {
-//  try (Statement stmt = con.createStatement()) {
-//    stmt.executeUpdate();
-//    
-//    
-//  } catch (SQLException e) {
-//    JDBCTutorialUtilities.printSQLException(e);
-//  }
-//}
+public void populateTable() throws SQLException {
+  try (Statement stmt = con.createStatement()) {
+	  stmt.executeUpdate("insert into DATA_REPOSITORY " +
+              "values('hello', 'https://www.example.com/hello')");
+	  stmt.executeUpdate("insert into DATA_REPOSITORY " +
+              "values('good', 'https://www.example.com/good')");
+	  stmt.executeUpdate("insert into DATA_REPOSITORY " +
+              "values('moring', 'https://www.example.com/moring')");
+    
+    
+  } catch (SQLException e) {
+    JDBCTutorialUtilities.printSQLException(e);
+  }
+}
 
 public void viewDataRepository() throws SQLException {
   

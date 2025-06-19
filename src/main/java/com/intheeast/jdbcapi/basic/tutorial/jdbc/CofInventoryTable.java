@@ -116,13 +116,13 @@ public class CofInventoryTable {
 	      myConnection = myJDBCTutorialUtilities.getConnection();
 
 	      // Java DB does not have an SQL create database command; it does require createDatabase
-//	      JDBCTutorialUtilities.createDatabase(myConnection,
-//	                                           myJDBCTutorialUtilities.dbName,
-//	                                           myJDBCTutorialUtilities.dbms);
-	//
-//	      JDBCTutorialUtilities.initializeTables(myConnection,
-//	                                             myJDBCTutorialUtilities.dbName,
-//	                                             myJDBCTutorialUtilities.dbms);
+	      JDBCTutorialUtilities.createDatabase(myConnection,
+	                                           myJDBCTutorialUtilities.dbName,
+	                                           myJDBCTutorialUtilities.dbms);
+	
+	      JDBCTutorialUtilities.initializeTables(myConnection,
+	                                             myJDBCTutorialUtilities.dbName,
+	                                             myJDBCTutorialUtilities.dbms);
 	      
 	      System.out.println("\nContents of COF_INVENTORY table:");
 	      

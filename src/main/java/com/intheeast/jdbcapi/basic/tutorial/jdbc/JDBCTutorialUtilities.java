@@ -77,18 +77,31 @@ public class JDBCTutorialUtilities {
     ProductInformationTable myPIT =
       new ProductInformationTable(con, dbNameArg, dbmsArg);
     
-    CoffeeDescriptionsTable myDescTable = new CoffeeDescriptionsTable(con, dbNameArg, dbmsArg);
-    CofInventoryTable myCofInventoryTable = new CofInventoryTable(con, dbNameArg, dbmsArg);
-    MerchInventoryTable myMerchInventoryTable = new MerchInventoryTable(con, dbNameArg, dbmsArg);
-    CoffeeHousesTable myCoffeeHousesTable = new CoffeeHousesTable(con, dbNameArg, dbmsArg);
-    DataRepositoryTable myDataRepositoryTable = new DataRepositoryTable(con, dbNameArg, dbmsArg);
+    CoffeeDescriptionsTable myDescTable = 
+    		new CoffeeDescriptionsTable(con, dbNameArg, dbmsArg);
+    CofInventoryTable myCofInventoryTable = 
+    		new CofInventoryTable(con, dbNameArg, dbmsArg);
+    MerchInventoryTable myMerchInventoryTable = 
+    		new MerchInventoryTable(con, dbNameArg, dbmsArg);
+    CoffeeHousesTable myCoffeeHousesTable = 
+    		new CoffeeHousesTable(con, dbNameArg, dbmsArg);
+    DataRepositoryTable myDataRepositoryTable = 
+    		new DataRepositoryTable(con, dbNameArg, dbmsArg);
 
     System.out.println("\nDropping exisiting PRODUCT_INFORMATION, COFFEES and SUPPLIERS tables");
-    myPIT.dropTable();
-    myRSSFeedsTable.dropTable();
-    myCoffeeTable.dropTable();
-    mySuppliersTable.dropTable();
+    
+    // 외래 키 제약 조건으로 인해 다음과 같은 순서로 Drop 해야 함!
+    myDataRepositoryTable.dropTable();        // no FK
+    myCoffeeHousesTable.dropTable();          // no FK
+    myMerchInventoryTable.dropTable();        // FK to SUPPLIERS
+    myCofInventoryTable.dropTable();          // FK to COFFEES, SUPPLIERS
+    myDescTable.dropTable();                  // FK to COFFEES
+    myRSSFeedsTable.dropTable();              // no FK
+    myCoffeeTable.dropTable();                // FK to SUPPLIERS
+    mySuppliersTable.dropTable();             // parent of many
+    myPIT.dropTable();                        // assuming no FK
 
+    
     System.out.println("\nCreating and populating SUPPLIERS table...");
 
     System.out.println("\nCreating SUPPLIERS table");
@@ -105,6 +118,22 @@ public class JDBCTutorialUtilities {
     
     System.out.println("\nCreating RSS_FEEDS table...");    
     myRSSFeedsTable.createTable();
+    
+    myDescTable.createTable();
+    //myDescTable.populateTable();
+    
+    myCofInventoryTable.createTable();
+    myCofInventoryTable.populateTable();
+    
+    myMerchInventoryTable.createTable();
+    myMerchInventoryTable.populateTable();
+    
+    myCoffeeHousesTable.createTable();
+    myCoffeeHousesTable.populateTable();
+    
+    myDataRepositoryTable.createTable();
+    myDataRepositoryTable.populateTable();
+    
   }
   
   public static void rowIdLifetime(Connection conn) throws SQLException {

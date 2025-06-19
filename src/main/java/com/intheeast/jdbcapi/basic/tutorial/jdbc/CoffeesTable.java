@@ -216,13 +216,21 @@ public class CoffeesTable {
     try (Statement stmt = con.createStatement()) {
 
       stmt.addBatch("INSERT INTO COFFEES " +
-                    "VALUES('Amaretto', 49, 9.99, 0, 0)");
+                    "VALUES('Colombian', 101, 7.99, 0, 0)");
+      
       stmt.addBatch("INSERT INTO COFFEES " +
-                    "VALUES('Hazelnut', 49, 9.99, 0, 0)");
+              "VALUES('French_Roast', 49, 8.99, 0, 0)");
+      
       stmt.addBatch("INSERT INTO COFFEES " +
-                    "VALUES('Amaretto_decaf', 49, 10.99, 0, 0)");
+              "VALUES('Espresso', 150, 9.99, 0, 0)");
+      
       stmt.addBatch("INSERT INTO COFFEES " +
-                    "VALUES('Hazelnut_decaf', 49, 10.99, 0, 0)");
+              "VALUES('Colombian_Decaf', 101, 8.99, 0, 0)");
+      
+      stmt.addBatch("INSERT INTO COFFEES " +
+              "VALUES('French_Roast_Decaf', 049, 9.99, 0, 0)");
+      
+      
 
       int[] updateCounts = stmt.executeBatch();
       con.commit();
