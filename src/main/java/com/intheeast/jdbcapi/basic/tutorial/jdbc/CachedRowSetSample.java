@@ -187,18 +187,17 @@ public class CachedRowSetSample {
   }
 
   private boolean doesItemIdExist(int id) throws SQLException {
-    String query = "select ITEM_ID from MERCH_INVENTORY where ITEM_ID = ?";
-    try (PreparedStatement ps = con.prepareStatement(query)){
-      ps.setInt(1, id);
-      if (ps.execute(query)) {
-        return true;
-      }
-    } catch (SQLException e) {
-      JDBCTutorialUtilities.printSQLException(e);
-    } 
-    return false;
-
-  }
+	    String query = "SELECT ITEM_ID FROM MERCH_INVENTORY WHERE ITEM_ID = ?";
+	    try (PreparedStatement ps = con.prepareStatement(query)) {
+	        ps.setInt(1, id);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            return rs.next(); // 결과가 존재하면 true
+	        }
+	    } catch (SQLException e) {
+	        JDBCTutorialUtilities.printSQLException(e);
+	    }
+	    return false;
+	}
 
   public static void viewTable(Connection con) throws SQLException {
     String query = "select * from MERCH_INVENTORY";
