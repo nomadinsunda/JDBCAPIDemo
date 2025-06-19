@@ -1,0 +1,17 @@
+DELIMITER |
+
+CREATE PROCEDURE GET_EMPLOYEE_PROJECTS(IN emp_id INT)
+BEGIN
+  SELECT p.Project_ID, p.Project_Name
+  FROM projects p
+  WHERE p.Employee_ID = emp_id;
+END
+|
+
+CREATE PROCEDURE DELETE_PROJECTS_BY_EMPLOYEE(IN emp_id INT)
+BEGIN
+  DELETE FROM projects WHERE Employee_ID = emp_id;
+END
+|
+
+DELIMITER ;
