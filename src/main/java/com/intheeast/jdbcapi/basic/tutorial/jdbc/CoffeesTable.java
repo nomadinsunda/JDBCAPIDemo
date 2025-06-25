@@ -69,7 +69,8 @@ public class CoffeesTable {
       "FOREIGN KEY (SUP_ID) REFERENCES SUPPLIERS (SUP_ID))";
     
     try (Statement stmt = con.createStatement()) {
-      stmt.executeUpdate(createString);
+      int ret = stmt.executeUpdate(createString);
+      int hello = ret;
     } catch (SQLException e) {
       JDBCTutorialUtilities.printSQLException(e);
     }
@@ -145,7 +146,9 @@ public class CoffeesTable {
     String coffeeName,
     float priceModifier,
     float maximumPrice) throws SQLException {
+	  
     con.setAutoCommit(false);
+    
     ResultSet rs = null;
     String priceQuery = "SELECT COF_NAME, PRICE FROM COFFEES " +
                         "WHERE COF_NAME = ?";
@@ -212,25 +215,40 @@ public class CoffeesTable {
   }
 
   public void batchUpdate() throws SQLException {
+	  System.out.println("+batchUpdate");
     con.setAutoCommit(false);
     try (Statement stmt = con.createStatement()) {
 
       stmt.addBatch("INSERT INTO COFFEES " +
-                    "VALUES('Colombian', 101, 7.99, 0, 0)");
+                    "VALUES('Arabica', 101, 7.99, 0, 0)");
       
       stmt.addBatch("INSERT INTO COFFEES " +
-              "VALUES('French_Roast', 49, 8.99, 0, 0)");
+              "VALUES('Robusta', 49, 8.99, 0, 0)");
       
       stmt.addBatch("INSERT INTO COFFEES " +
-              "VALUES('Espresso', 150, 9.99, 0, 0)");
+              "VALUES('Liberica', 150, 9.99, 0, 0)");
       
       stmt.addBatch("INSERT INTO COFFEES " +
-              "VALUES('Colombian_Decaf', 101, 8.99, 0, 0)");
+              "VALUES('Excelsa', 101, 8.99, 0, 0)");
       
       stmt.addBatch("INSERT INTO COFFEES " +
-              "VALUES('French_Roast_Decaf', 049, 9.99, 0, 0)");
+              "VALUES('Washed', 049, 9.99, 0, 0)"); 
       
       
+//    	stmt.addBatch("INSERT INTO COFFEES " +
+//                "VALUES('hello1', 101, 7.99, 0, 0)");
+//  
+//	  stmt.addBatch("INSERT INTO COFFEES " +
+//	          "VALUES('hello2', 49, 8.99, 0, 0)");
+//	  
+//	  stmt.addBatch("INSERT INTO COFFEES " +
+//	          "VALUES('hello3', 150, 9.99, 0, 0)");
+//	  
+//	  stmt.addBatch("INSERT INTO COFFEES " +
+//	          "VALUES('hello4', 101, 8.99, 0, 0)");
+//	  
+//	  stmt.addBatch("INSERT INTO COFFEES " +
+//	          "VALUES('hello5', 049, 9.99, 0, 0)");     
 
       int[] updateCounts = stmt.executeBatch();
       con.commit();
@@ -240,6 +258,7 @@ public class CoffeesTable {
       JDBCTutorialUtilities.printSQLException(ex);
     } finally {
       con.setAutoCommit(true);
+      System.out.println("-batchUpdate");
     }
   }
   

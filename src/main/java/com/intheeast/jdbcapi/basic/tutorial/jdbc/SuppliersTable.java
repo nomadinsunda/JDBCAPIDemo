@@ -58,6 +58,7 @@ public class SuppliersTable {
       "CITY varchar(20) NOT NULL, " + "STATE char(2) NOT NULL, " +
       "ZIP char(5), " + "PRIMARY KEY (SUP_ID))";
     
+    
     try (Statement stmt = con.createStatement()) {
       stmt.executeUpdate(createString);
     } catch (SQLException e) {
@@ -154,6 +155,9 @@ public class SuppliersTable {
       }
     }
     try {
+    	// tcp socket을 연결을 설정합니다(Client -> Database) : 
+    	// 연결 설정 해제: 하나의 트랜잭션이 완료되면 커넥션 해제
+    	// Hicari CP : socket 생성한 후에, 삭제를 하지 않고 재사용!!! 
       myConnection = myJDBCTutorialUtilities.getConnection();
 
       // Java DB does not have an SQL create database command; it does require createDatabase

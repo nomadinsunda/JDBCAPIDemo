@@ -23,6 +23,7 @@ public class CoffeeHousesTable {
                  "MERCH INT NOT NULL, " +
                  "TOTAL INT NOT NULL, " +
                  "PRIMARY KEY (STORE_ID))";
+    
     try (Statement stmt = con.createStatement()) {
       stmt.executeUpdate(sql);
     } catch (SQLException e) {
@@ -95,7 +96,7 @@ public class CoffeeHousesTable {
 
 	  public static void viewTable(Connection con) throws SQLException {
 	    String query =
-	      "select STORE_ID, CITY, COFFEE, MERCH, TOTAL from COFFEE_HOUSES";
+	      "select */*STORE_ID, CITY, COFFEE, MERCH, TOTAL*/ from COFFEE_HOUSES";
 	    try (Statement stmt = con.createStatement()) {
 	      ResultSet rs = stmt.executeQuery(query);
 	      while (rs.next()) {
